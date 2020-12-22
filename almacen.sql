@@ -218,3 +218,23 @@ CREATE TABLE commodity_unit_quantity(
     FOREIGN KEY (unit_id) 			REFERENCES 		unit(unit_id),
     FOREIGN KEY (quantity_id) 	    REFERENCES 		quantity(quantity_id)
 );
+
+
+
+
+/*ALMACEN_MERCANCIA_UNIDAD_CANTIDAD*/
+CREATE TABLE store_commodity_unit_quantity(
+    store_commodity_unit_quantity_id                INT		         NOT NULL AUTO_INCREMENT PRIMARY KEY,       /*almacen_mercancia_unidad_cantidad_id*/
+    commodity_unit_quantity_id                      INT		         NOT NULL,                                  /*mercancia_unidad_cantidad_id*/
+    store_id                                        INT		         NOT NULL,                                  /*almacen_id*/
+    stock_min                                       DOUBLE           NULL DEFAULT 0.0,                          /*abastecimiento_min*/
+    stock_max                                       DOUBLE           NULL DEFAULT 0.0,                          /*abastecimiento_max*/
+    current_stock                                   DOUBLE           NULL DEFAULT 0.0,                          /*actual_abastecimiento*/
+	last_update                                     DATETIME         NOT NULL DEFAULT '1998-10-10',             /*ultima_actualizacion*/
+    favorite 					                    INT 			 NULL DEFAULT 0,                            /*favorito*/
+    user_id                                         BIGINT           NOT NULL,                                  /*usuario_id*/
+    state                                           TINYINT       	 NOT NULL DEFAULT 1,                        /*estado*/
+
+     FOREIGN KEY (commodity_unit_quantity_id) REFERENCES commodity_unit_quantity(commodity_unit_quantity_id),
+     FOREIGN KEY (store_id) REFERENCES store(store_id)
+);
