@@ -75,3 +75,20 @@ CREATE TABLE role(
     role_name   VARCHAR(100)    NOT NULL,									/*nombre_rol*/
     state       TINYINT 	    NOT NULL DEFAULT 1							/*estado*/
 );
+
+
+
+
+/*USUARIO*/
+CREATE TABLE user(
+    user_id         BIGINT      	 NOT NULL PRIMARY KEY,		/*usuario_id*/
+    role_id         INT      	 	 NOT NULL,					/*rol_id*/
+    token_id        INT	  	 		 NULL,						/*token_id*/
+    username        VARCHAR(100)  	 NOT NULL,					/*nombre_usuario*/
+    password        VARCHAR(255)   	 NOT NULL,					/*clave*/
+    state           TINYINT       	 NOT NULL DEFAULT 1,		/*estado*/
+
+    FOREIGN KEY     (user_id)       REFERENCES      person(person_id),
+    FOREIGN KEY     (role_id)       REFERENCES      role(role_id),
+    FOREIGN KEY     (token_id)      REFERENCES      token(token_id)
+);
