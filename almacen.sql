@@ -106,6 +106,38 @@ CREATE TABLE category(
 
 
 
+/*MARCA*/
+CREATE TABLE BRAND(
+    brand_id                 INT                NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*marca_id*/
+    brand_name               VARCHAR(100)       NOT NULL,		 							/*nombre_marca*/
+    state                    TINYINT            NOT NULL DEFAULT 1		 					/*estado*/
+);
+
+
+
+
+/*UNIDAD*/
+CREATE TABLE unit(
+    unit_id             INT       		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*unidad_id*/
+    unit_name           VARCHAR(50)     NOT NULL,									/*nombre_unidad*/
+    symbol              VARCHAR(10)     NULL DEFAULT '',	 						/*simbolo*/
+    state               TINYINT      	NOT NULL DEFAULT 1		 					/*estado*/
+);
+
+
+
+
+/*CANTIDAD*/
+CREATE TABLE quantity(
+     quantity_id              INT       	   NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*nombre_cantidad*/
+     quantity_name            VARCHAR(50)      NOT NULL,								/*nombre_cantidad*/
+     short_name               VARCHAR(10)      NULL DEFAULT '',		 					/*nombre_corto*/
+     state                    TINYINT      	   NOT NULL DEFAULT 1		 				/*estado*/
+);
+
+
+
+
 /*ALMACEN*/
 CREATE TABLE store(
     store_id           INT		       NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_id*/
