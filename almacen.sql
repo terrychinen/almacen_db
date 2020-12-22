@@ -1,5 +1,5 @@
-CREATE DATABASE sorpresa_db;
-use sorpresa_db;
+CREATE DATABASE almacen_db;
+use almacen_db;
 
 
 
@@ -52,4 +52,189 @@ CREATE TABLE person_address(
     state                    TINYINT       	 NOT NULL DEFAULT 1,						/*estado*/
 
     FOREIGN KEY     (person_id)     REFERENCES person(person_id)
+);
+
+
+
+
+/*TOKEN*/
+CREATE TABLE token(
+	token_id     INT			NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*token_id*/
+    token_key    LONGTEXT   	NOT NULL,									/*llave_token*/
+    created_at   DATETIME       NOT NULL,									/*creado_a_las*/ 
+    expires_in   BIGINT    		NOT NULL,									/*expira_en*/
+	state        TINYINT	    NOT NULL DEFAULT 1							/*estado*/
+);
+
+
+
+
+/*ROL*/
+CREATE TABLE role(
+    role_id     INT       		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*rol_id*/
+    role_name   VARCHAR(100)    NOT NULL,									/*nombre_rol*/
+    state       TINYINT 	    NOT NULL DEFAULT 1							/*estado*/
+);
+
+
+
+
+/*USUARIO*/
+CREATE TABLE user(
+    user_id         BIGINT      	 NOT NULL PRIMARY KEY,		/*usuario_id*/
+    role_id         INT      	 	 NOT NULL,					/*rol_id*/
+    token_id        INT	  	 		 NULL,						/*token_id*/
+    username        VARCHAR(100)  	 NOT NULL,					/*nombre_usuario*/
+    password        VARCHAR(255)   	 NOT NULL,					/*clave*/
+    state           TINYINT       	 NOT NULL DEFAULT 1,		/*estado*/
+
+    FOREIGN KEY     (user_id)       REFERENCES      person(person_id),
+    FOREIGN KEY     (role_id)       REFERENCES      role(role_id),
+    FOREIGN KEY     (token_id)      REFERENCES      token(token_id)
+);
+
+
+
+
+/*CATEGORIA*/
+CREATE TABLE category(
+    category_id         INT      		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*categoria_id*/
+    category_name       VARCHAR(100)   	NOT NULL,   								/*nombre_categoria*/
+    state               TINYINT     	NOT NULL DEFAULT 1							/*estado*/
+);
+
+
+
+
+/*MARCA*/
+CREATE TABLE BRAND(
+    brand_id                 INT                NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*marca_id*/
+    brand_name               VARCHAR(100)       NOT NULL,		 							/*nombre_marca*/
+    state                    TINYINT            NOT NULL DEFAULT 1		 					/*estado*/
+);
+
+
+
+
+/*UNIDAD*/
+CREATE TABLE unit(
+    unit_id             INT       		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*unidad_id*/
+    unit_name           VARCHAR(50)     NOT NULL,									/*nombre_unidad*/
+    symbol              VARCHAR(10)     NULL DEFAULT '',	 						/*simbolo*/
+    state               TINYINT      	NOT NULL DEFAULT 1		 					/*estado*/
+);
+
+
+
+
+/*CANTIDAD*/
+CREATE TABLE quantity(
+     quantity_id              INT       	   NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*nombre_cantidad*/
+     quantity_name            VARCHAR(50)      NOT NULL,								/*nombre_cantidad*/
+     short_name               VARCHAR(10)      NULL DEFAULT '',		 					/*nombre_corto*/
+     state                    TINYINT      	   NOT NULL DEFAULT 1		 				/*estado*/
+);
+
+
+
+
+/*ALMACEN*/
+CREATE TABLE store(
+    store_id           INT		       NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_id*/
+    store_name         VARCHAR(100)    NOT NULL,								/*nombre_almacen*/
+	state              TINYINT		   NOT NULL DEFAULT 1 					    /*estado*/
+);
+
+
+
+
+/*usuario_almacen*/
+CREATE TABLE user_store(
+		user_store_id		INT		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*usuario_almacen_id*/
+        user_id				INT		NOT NULL,               				    /*usuario_id*/
+        store_id			INT		NOT NULL,                                   /*almacen_id*/
+        
+        FOREIGN KEY (user_id) 	REFERENCES user(user_id),
+        FOREIGN KEY (store_id)	REFERENCES store(store_id)
+);
+
+
+
+
+/*ALMACEN_CATEGORIA*/
+CREATE TABLE store_category(
+    store_category_id         INT		     NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_categoria_id*/ 
+    store_id                  INT	 	     NOT NULL,									/*almacen_id*/
+    category_id               INT       	 NOT NULL,									/*categoria_id*/
+    favorite                  TINYINT	     NULL DEFAULT 0,                            /*favorito*/
+    state                     TINYINT	     NOT NULL DEFAULT 1,						/*estado*/
+
+    FOREIGN KEY (store_id)     REFERENCES store(store_id),
+    FOREIGN KEY (category_id)  REFERENCES category(category_id)
+);
+
+
+
+
+/*MERCANCIA*/
+CREATE TABLE commodity(
+    commodity_id            INT		        NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_id*/
+    brand_id                INT             NOT NULL,									/*marca_id*/
+    commodity_name          VARCHAR(200)    NOT NULL,									/*nombre_mercancia*/
+
+    FOREIGN KEY (brand_id)          REFERENCES      brand(brand_id)
+);
+
+
+
+
+/*MERCANCIA_CATEGORIA*/
+CREATE TABLE commodity_category(
+	commodity_category_id		INT		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_categoria_id*/
+    commodity_id				INT		NOT NULL,									/*mercancia_id*/
+    category_id					INT		NOT NULL,									/*category_id*/
+    state						INT     NOT NULL DEFAULT 1,							/*estado*/
+    
+    FOREIGN KEY (commodity_id)	REFERENCES	commodity(commodity_id),
+    FOREIGN KEY (category_id)	REFERENCES	category(category_id)
+);
+
+
+
+
+/*MERCANCIA_UNIDAD_CANTIDAD*/
+CREATE TABLE commodity_unit_quantity(
+    commodity_unit_quantity_id          INT                 NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_unidad_cantidad_id*/
+    commodity_id            	        INT		        	NOT NULL,									/*mercancia_id*/
+    unit_id						        INT       			NOT NULL,									/*unidad_id*/
+    unit_value                          DOUBLE              NOT NULL DEFAULT 0.0,						/*unidad_valor*/
+    quantity_id                         INT       	        NOT NULL,									/*cantidad_id*/
+    quantity_value                      DOUBLE              NOT NULL DEFAULT 0.0,						/*cantidad_valor*/
+    barcode                             VARCHAR(200)        NULL DEFAULT '',							/*codigo_barra*/
+    photo                               VARCHAR(200)        NULL DEFAULT '',							/*foto*/
+    state						        TINYINT				NOT NULL DEFAULT 1,							/*estado*/
+    
+    FOREIGN KEY (commodity_id) 	    REFERENCES 		commodity(commodity_id),
+    FOREIGN KEY (unit_id) 			REFERENCES 		unit(unit_id),
+    FOREIGN KEY (quantity_id) 	    REFERENCES 		quantity(quantity_id)
+);
+
+
+
+
+/*ALMACEN_MERCANCIA_UNIDAD_CANTIDAD*/
+CREATE TABLE store_commodity_unit_quantity(
+    store_commodity_unit_quantity_id                INT		         NOT NULL AUTO_INCREMENT PRIMARY KEY,       /*almacen_mercancia_unidad_cantidad_id*/
+    commodity_unit_quantity_id                      INT		         NOT NULL,                                  /*mercancia_unidad_cantidad_id*/
+    store_id                                        INT		         NOT NULL,                                  /*almacen_id*/
+    stock_min                                       DOUBLE           NULL DEFAULT 0.0,                          /*abastecimiento_min*/
+    stock_max                                       DOUBLE           NULL DEFAULT 0.0,                          /*abastecimiento_max*/
+    current_stock                                   DOUBLE           NULL DEFAULT 0.0,                          /*actual_abastecimiento*/
+	last_update                                     DATETIME         NOT NULL DEFAULT '1998-10-10',             /*ultima_actualizacion*/
+    favorite 					                    INT 			 NULL DEFAULT 0,                            /*favorito*/
+    user_id                                         BIGINT           NOT NULL,                                  /*usuario_id*/
+    state                                           TINYINT       	 NOT NULL DEFAULT 1,                        /*estado*/
+
+     FOREIGN KEY (commodity_unit_quantity_id) REFERENCES commodity_unit_quantity(commodity_unit_quantity_id),
+     FOREIGN KEY (store_id) REFERENCES store(store_id)
 );
