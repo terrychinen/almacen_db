@@ -256,3 +256,49 @@ CREATE TABLE stock_history(
     FOREIGN KEY (store_commodity_unit_quantity_id) REFERENCES store_commodity_unit_quantity(store_commodity_unit_quantity_id),
 	FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
+
+
+
+
+/*TIPO DE DOCUMENTO*/
+CREATE TABLE document_type(
+    document_type_id            INT                NOT NULL AUTO_INCREMENT PRIMARY KEY,     /*documento_tipo_id*/
+    type_name                   VARCHAR(200)       NOT NULL                                 /*documento_nombre*/
+);
+
+
+
+
+/*DOCUMENTO*/
+CREATE TABLE document(
+    document_id             INT             NOT NULL AUTO_INCREMENT PRIMARY KEY,        /*documento_id*/
+    document_type_id        INT             NOT NULL,                                   /*documento_tipo_id*/
+    supplier_id             INT             NOT NULL,                                   /*proveedor_id*/
+    user_id                 BIGINT          NOT NULL,                                   /*usuario_id*/
+    document_code           VARCHAR(100)    NOT NULL,                                   /*documento_codigo*/
+    discount_price          DOUBLE          NOT NULL,                                   /*descuento_precio*/
+    igv                     DOUBLE          NOT NULL,                                   /*igv*/
+    igv_price               DOUBLE          NOT NULL,                                   /*igv_precio*/
+    total_price             DOUBLE          NOT NULL DEFAULT 0.0,                       /*total_precio*/
+    date				    DATE		    NOT NULL DEFAULT '1998-10-10',              /*fecha*/ 
+
+    FOREIGN KEY (document_type_id)       REFERENCES             document_type(document_type_id),
+    FOREIGN KEY (supplier_id)            REFERENCES             supplier(supplier_id),
+    FOREIGN KEY (user_id)                REFERENCES             user(user_id)
+);
+
+
+
+
+/*DETALLE DEL DOCUMENTO*/
+CREATE TABLE document_details(
+    document_details_id                   INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,      /*documento_detalle_id*/
+    document_id                           INT         NOT NULL,                                 /*documento_id*/
+    commodity_unit_quantity_id            INT         NOT NULL,                                 /*mercancia_unidad_cantidad_id*/
+    quantity                              DOUBLE      NOT NULL DEFAULT 0.0,                     /*cantidad*/
+    price_unit                            DOUBLE      NOT NULL DEFAULT 0.0,                     /*precio_unitario*/
+
+    FOREIGN KEY (document_id)                       REFERENCES      document(document_id),
+    FOREIGN KEY (commodity_unit_quantity_id)        REFERENCES      commodity_unit_quantity(commodity_unit_quantity_id)
+
+);
