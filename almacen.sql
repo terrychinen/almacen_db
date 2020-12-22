@@ -102,3 +102,16 @@ CREATE TABLE store(
     store_name         VARCHAR(100)    NOT NULL,								/*nombre_almacen*/
 	state              TINYINT		   NOT NULL DEFAULT 1 					    /*estado*/
 );
+
+
+
+
+/*usuario_almacen*/
+CREATE TABLE user_store(
+		user_store_id		INT		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*usuario_almacen_id*/
+        user_id				INT		NOT NULL,               				    /*usuario_id*/
+        store_id			INT		NOT NULL,                                   /*almacen_id*/
+        
+        FOREIGN KEY (user_id) 	REFERENCES user(user_id),
+        FOREIGN KEY (store_id)	REFERENCES store(store_id)
+);
