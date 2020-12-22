@@ -65,3 +65,13 @@ CREATE TABLE token(
     expires_in   BIGINT    		NOT NULL,									/*expira_en*/
 	state        TINYINT	    NOT NULL DEFAULT 1							/*estado*/
 );
+
+
+
+
+/*ROL*/
+CREATE TABLE role(
+    role_id     INT       		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*rol_id*/
+    role_name   VARCHAR(100)    NOT NULL,									/*nombre_rol*/
+    state       TINYINT 	    NOT NULL DEFAULT 1							/*estado*/
+);
