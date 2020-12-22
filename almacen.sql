@@ -96,6 +96,16 @@ CREATE TABLE user(
 
 
 
+/*CATEGORIA*/
+CREATE TABLE category(
+    category_id         INT      		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*categoria_id*/
+    category_name       VARCHAR(100)   	NOT NULL,   								/*nombre_categoria*/
+    state               TINYINT     	NOT NULL DEFAULT 1							/*estado*/
+);
+
+
+
+
 /*ALMACEN*/
 CREATE TABLE store(
     store_id           INT		       NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_id*/
@@ -114,4 +124,19 @@ CREATE TABLE user_store(
         
         FOREIGN KEY (user_id) 	REFERENCES user(user_id),
         FOREIGN KEY (store_id)	REFERENCES store(store_id)
+);
+
+
+
+
+/*ALMACEN_CATEGORIA*/
+CREATE TABLE store_category(
+    store_category_id         INT		     NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_categoria_id*/ 
+    store_id                  INT	 	     NOT NULL,									/*almacen_id*/
+    category_id               INT       	 NOT NULL,									/*categoria_id*/
+    favorite                  TINYINT	     NULL DEFAULT 0,                            /*favorito*/
+    state                     TINYINT	     NOT NULL DEFAULT 1,						/*estado*/
+
+    FOREIGN KEY (store_id)     REFERENCES store(store_id),
+    FOREIGN KEY (category_id)  REFERENCES category(category_id)
 );
