@@ -92,3 +92,13 @@ CREATE TABLE user(
     FOREIGN KEY     (role_id)       REFERENCES      role(role_id),
     FOREIGN KEY     (token_id)      REFERENCES      token(token_id)
 );
+
+
+
+
+/*ALMACEN*/
+CREATE TABLE store(
+    store_id           INT		       NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_id*/
+    store_name         VARCHAR(100)    NOT NULL,								/*nombre_almacen*/
+	state              TINYINT		   NOT NULL DEFAULT 1 					    /*estado*/
+);
