@@ -198,3 +198,23 @@ CREATE TABLE commodity_category(
     FOREIGN KEY (commodity_id)	REFERENCES	commodity(commodity_id),
     FOREIGN KEY (category_id)	REFERENCES	category(category_id)
 );
+
+
+
+
+/*MERCANCIA_UNIDAD_CANTIDAD*/
+CREATE TABLE commodity_unit_quantity(
+    commodity_unit_quantity_id          INT                 NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_unidad_cantidad_id*/
+    commodity_id            	        INT		        	NOT NULL,									/*mercancia_id*/
+    unit_id						        INT       			NOT NULL,									/*unidad_id*/
+    unit_value                          DOUBLE              NOT NULL DEFAULT 0.0,						/*unidad_valor*/
+    quantity_id                         INT       	        NOT NULL,									/*cantidad_id*/
+    quantity_value                      DOUBLE              NOT NULL DEFAULT 0.0,						/*cantidad_valor*/
+    barcode                             VARCHAR(200)        NULL DEFAULT '',							/*codigo_barra*/
+    photo                               VARCHAR(200)        NULL DEFAULT '',							/*foto*/
+    state						        TINYINT				NOT NULL DEFAULT 1,							/*estado*/
+    
+    FOREIGN KEY (commodity_id) 	    REFERENCES 		commodity(commodity_id),
+    FOREIGN KEY (unit_id) 			REFERENCES 		unit(unit_id),
+    FOREIGN KEY (quantity_id) 	    REFERENCES 		quantity(quantity_id)
+);
