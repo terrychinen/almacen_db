@@ -1,5 +1,5 @@
-CREATE DATABASE sorpresa_db;
-use sorpresa_db;
+CREATE DATABASE almacen_db;
+use almacen_db;
 
 
 
