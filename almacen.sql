@@ -53,3 +53,15 @@ CREATE TABLE person_address(
 
     FOREIGN KEY     (person_id)     REFERENCES person(person_id)
 );
+
+
+
+
+/*TOKEN*/
+CREATE TABLE token(
+	token_id     INT			NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*token_id*/
+    token_key    LONGTEXT   	NOT NULL,									/*llave_token*/
+    created_at   DATETIME       NOT NULL,									/*creado_a_las*/ 
+    expires_in   BIGINT    		NOT NULL,									/*expira_en*/
+	state        TINYINT	    NOT NULL DEFAULT 1							/*estado*/
+);
