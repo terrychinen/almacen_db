@@ -172,3 +172,29 @@ CREATE TABLE store_category(
     FOREIGN KEY (store_id)     REFERENCES store(store_id),
     FOREIGN KEY (category_id)  REFERENCES category(category_id)
 );
+
+
+
+
+/*MERCANCIA*/
+CREATE TABLE commodity(
+    commodity_id            INT		        NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_id*/
+    brand_id                INT             NOT NULL,									/*marca_id*/
+    commodity_name          VARCHAR(200)    NOT NULL,									/*nombre_mercancia*/
+
+    FOREIGN KEY (brand_id)          REFERENCES      brand(brand_id)
+);
+
+
+
+
+/*MERCANCIA_CATEGORIA*/
+CREATE TABLE commodity_category(
+	commodity_category_id		INT		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_categoria_id*/
+    commodity_id				INT		NOT NULL,									/*mercancia_id*/
+    category_id					INT		NOT NULL,									/*category_id*/
+    state						INT     NOT NULL DEFAULT 1,							/*estado*/
+    
+    FOREIGN KEY (commodity_id)	REFERENCES	commodity(commodity_id),
+    FOREIGN KEY (category_id)	REFERENCES	category(category_id)
+);
