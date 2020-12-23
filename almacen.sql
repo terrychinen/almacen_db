@@ -164,12 +164,12 @@ CREATE TABLE user_store(
 
 /*ALMACEN_CATEGORIA*/
 CREATE TABLE store_category(
-    store_category_id         INT		     NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*almacen_categoria_id*/ 
     store_id                  INT	 	     NOT NULL,									/*almacen_id*/
     category_id               INT       	 NOT NULL,									/*categoria_id*/
     favorite                  TINYINT	     NULL DEFAULT 0,                            /*favorito*/
     state                     TINYINT	     NOT NULL DEFAULT 1,						/*estado*/
 
+	PRIMARY KEY (store_id, category_id),
     FOREIGN KEY (store_id)     REFERENCES store(store_id),
     FOREIGN KEY (category_id)  REFERENCES category(category_id)
 );
