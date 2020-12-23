@@ -181,6 +181,7 @@ CREATE TABLE commodity(
     commodity_id            INT		        NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_id*/
     brand_id                INT             NOT NULL,									/*marca_id*/
     commodity_name          VARCHAR(200)    NOT NULL,									/*nombre_mercancia*/
+    state					INT				NOT NULL,									/*estado*/
 
     FOREIGN KEY (brand_id)          REFERENCES      brand(brand_id)
 );
