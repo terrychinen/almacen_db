@@ -192,11 +192,11 @@ CREATE TABLE commodity(
 
 /*MERCANCIA_CATEGORIA*/
 CREATE TABLE commodity_category(
-	commodity_category_id		INT		NOT NULL AUTO_INCREMENT PRIMARY KEY,		/*mercancia_categoria_id*/
-    commodity_id				INT		NOT NULL,									/*mercancia_id*/
-    category_id					INT		NOT NULL,									/*category_id*/
-    state						INT     NOT NULL DEFAULT 1,							/*estado*/
+    commodity_id				INT		    NOT NULL,									/*mercancia_id*/
+    category_id					INT		    NOT NULL,									/*category_id*/
+    state						TINYINT     NOT NULL DEFAULT 1,							/*estado*/
     
+    PRIMARY KEY (commodity_id, category_id),
     FOREIGN KEY (commodity_id)	REFERENCES	commodity(commodity_id),
     FOREIGN KEY (category_id)	REFERENCES	category(category_id)
 );
